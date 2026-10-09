@@ -84,7 +84,7 @@ Files without an extension in the table are `.CATPart` files.
 ```
 Advanced-Computer-Aided-Design/
 ├── README.md
-├── CAD-Files/      CATIA V5 parts and assemblies (open Excavator_Group25.CATProduct)
+├── Excavator_Model-Files/      CATIA V5 parts and assemblies (open Excavator_Group25.CATProduct)
 └── Renders/        Realistic renders of the excavator
 ```
 

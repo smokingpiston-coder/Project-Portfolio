@@ -1,0 +1,2 @@
+Use SOC_init = 28% 
+Run Porsche_main_parallel to see working points for all plots for EM and ICE

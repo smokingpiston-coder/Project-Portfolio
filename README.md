@@ -81,5 +81,5 @@ The common thread in all of it is one way of working: **understand the physics, 
 ## 📫 Contact
 I'm open to roles in **vehicle dynamics, chassis and steering systems, electrified powertrains, and simulation and testing** in the automotive and commercial vehicle industry.
 
-- **LinkedIn:** *add your profile link here*
-- **Email:** *add your email here*
+- **LinkedIn:**  *www.linkedin.com/in/ramkumarmunavalli1994*
+- **Email:** *munavalliramkumar@outlook.com*

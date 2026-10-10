@@ -1,0 +1,2 @@
+Use SOC_init = 39% 
+Run Porsche_main to see working points for all plots for EM, ICE and EG

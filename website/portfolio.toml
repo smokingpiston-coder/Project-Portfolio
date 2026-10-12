@@ -1,0 +1,25 @@
+# Settings for the portfolio website. Everything else (projects, highlights,
+# skills, contact) is read from the README files, so most updates only need
+# a README edit and a push.
+
+[site]
+title = "Ramkumar Huleppa Munavalli – Mobility Engineering Portfolio"
+description = "Vehicle dynamics, steering, electrification and simulation projects from an M.Sc. in Mobility Engineering at Chalmers."
+# Path the site is served from on GitHub Pages (https://<user>.github.io/<repo>/)
+base_path = "/Project-Portfolio/"
+url = "https://smokingpiston-coder.github.io/Project-Portfolio/"
+
+[person]
+name = "Ramkumar Huleppa Munavalli"
+short_name = "Ramkumar"
+role = "Mobility engineer working on vehicle dynamics, steering and electrified powertrains"
+location = "Gothenburg, Sweden"
+
+[github]
+repo_url = "https://github.com/smokingpiston-coder/Project-Portfolio"
+branch = "main"
+
+# Leave empty to read them from the Contact section of the root README.
+[links]
+email = ""
+linkedin = ""

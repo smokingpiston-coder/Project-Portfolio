@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ self.description() }}">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&display=swap">
+<link rel="stylesheet" href="{{ root }}static/style.css">
+<link rel="icon" href="{{ root }}static/favicon.svg" type="image/svg+xml">
+</head>
+<body data-root="{{ root }}">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <button class="menu-btn" type="button" aria-controls="sidebar" aria-expanded="false">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <span>Projects</span>
+  </button>
+  <a class="topbar-name" href="{{ root }}index.html">{{ person.name }}</a>
+</header>
+
+<div class="shell">
+  <nav class="sidebar" id="sidebar" aria-label="Portfolio">
+    <a class="brand" href="{{ root }}index.html">
+      <span class="brand-name">{{ person.name }}</span>
+      <span class="brand-role">{{ person.location }}</span>
+    </a>
+
+    <div class="search" role="search">
+      <label class="visually-hidden" for="q">Search projects</label>
+      <input id="q" type="search" placeholder="Search projects, tools, topics" autocomplete="off">
+      <kbd aria-hidden="true">/</kbd>
+      <ol class="search-results" id="search-results" hidden></ol>
+    </div>
+
+    <ul class="nav-top">
+      <li><a href="{{ root }}index.html" {% if active is none %}aria-current="page"{% endif %}>Overview</a></li>
+      <li><a href="{{ root }}status.html" {% if active == 'status' %}aria-current="page"{% endif %}>Portfolio status</a></li>
+    </ul>
+
+    {% macro tree(node) -%}
+      {%- set current = (p is defined and p.rel == node.rel) -%}
+      {%- set open = (p is defined and p.rel.parts[:node.rel.parts|length] == node.rel.parts) -%}
+      {%- set kids = node.children | selectattr('has_readme') | rejectattr('is_asset_folder') | list -%}
+      {%- if kids %}
+      <li class="has-kids">
+        <details {% if open %}open{% endif %}>
+          <summary>
+            <a href="{{ root }}{{ node.url }}" {% if current %}aria-current="page"{% endif %}>{{ node.short | truncate(64) }}</a>
+          </summary>
+          <ul>{% for c in kids %}{{ tree(c) }}{% endfor %}</ul>
+        </details>
+      </li>
+      {%- else %}
+      <li><a href="{{ root }}{{ node.url }}" {% if current %}aria-current="page"{% endif %}>{{ node.short | truncate(64) }}</a></li>
+      {%- endif %}
+    {%- endmacro %}
+
+    {% for cat in categories %}
+    <section class="nav-group">
+      <h2>{{ cat.name }}</h2>
+      <ul class="nav-tree">
+        {% for item in cat['items'] %}{{ tree(item.project) }}{% endfor %}
+      </ul>
+    </section>
+    {% endfor %}
+
+    <p class="nav-foot">
+      <a class="ext" href="{{ github.repo_url }}">Source on GitHub</a><br>
+      Updated {{ built_at }}
+    </p>
+  </nav>
+  <div class="scrim" hidden></div>
+
+  <main id="main" tabindex="-1">
+    {% block content %}{% endblock %}
+    <footer class="site-foot">
+      <span>© {{ year }} {{ person.name }}</span>
+      <a href="{{ root }}index.html#contact">Contact</a>
+    </footer>
+  </main>
+</div>
+<script src="{{ root }}static/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block description %}{{ p.summary or site.description }}{% endblock %}
+{% block content %}
+<div class="project-layout">
+<article class="project">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="{{ root }}index.html">Overview</a></li>
+      {% if p.category %}<li><a href="{{ root }}index.html#projects">{{ p.category }}</a></li>{% endif %}
+      {% for c in crumbs %}<li><a href="{{ root }}{{ c.url }}">{{ c.short | truncate(48) }}</a></li>{% endfor %}
+    </ol>
+  </nav>
+
+  <header class="project-head">
+    <h1>{{ p.title }}</h1>
+    {% if meta or p.tools %}
+    <dl class="factsheet">
+      {% for k, v in meta %}<div><dt>{{ k }}</dt><dd>{{ v }}</dd></div>{% endfor %}
+      {% if p.tools %}<div class="wide"><dt>Tools</dt><dd><ul class="tags">{% for t in p.tools %}<li>{{ t }}</li>{% endfor %}</ul></dd></div>{% endif %}
+    </dl>
+    {% endif %}
+    <p class="project-links">
+      <a class="ext" href="{{ github_folder }}">Open this folder on GitHub</a>
+      {% if p.last_updated %}<span>Last updated {{ p.last_updated | date }}</span>{% endif %}
+    </p>
+  </header>
+
+  {% if p.children | selectattr('has_readme') | list %}
+  <section class="subprojects" aria-labelledby="sub-h">
+    <h2 id="sub-h">Inside this project</h2>
+    <ul>
+      {% for c in p.children if c.has_readme %}
+      <li><a href="{{ root }}{{ c.url }}"><strong>{{ c.title | replace(' – ', ': ') }}</strong>{% if c.summary %}<span>{{ c.summary }}</span>{% endif %}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <div class="readme">
+    {% if body %}{{ body | safe }}{% elif not files and not gallery %}
+    <p class="empty">Details for this part of the project are on GitHub.</p>
+    {% endif %}
+  </div>
+
+  {% if gallery %}
+  <section class="gallery-wrap" aria-labelledby="gal-h">
+    <h2 id="gal-h">Figures</h2>
+    <ul class="gallery">
+      {% for g in gallery %}
+      <li><a href="{{ g.url }}"><img src="{{ g.url }}" alt="{{ g.name }}" loading="lazy"><span>{{ g.name }}</span></a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if files %}
+  <section class="files" aria-labelledby="files-h">
+    <h2 id="files-h">Files in this folder</h2>
+    <div class="table-scroll">
+    <table class="md-table file-table">
+      <thead><tr><th>File</th><th>Type</th><th class="num">Size</th></tr></thead>
+      <tbody>
+      {% for f in files %}
+      <tr>
+        <td><a href="{{ f.url }}" {% if f.external %}class="ext"{% endif %}>{{ f.name }}</a></td>
+        <td><span class="kind kind-{{ f.kind | lower }}">{{ f.kind }}</span></td>
+        <td class="num">{{ f.size }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="hint">Reports and images open here. Models, scripts and CAD files open on GitHub, where you can download them.</p>
+  </section>
+  {% endif %}
+
+  {% if prev or next %}
+  <nav class="pager" aria-label="More projects">
+    {% if prev %}<a class="prev" href="{{ root }}{{ prev.url }}"><span>Previous project</span>{{ prev.short }}</a>{% else %}<span></span>{% endif %}
+    {% if next %}<a class="next" href="{{ root }}{{ next.url }}"><span>Next project</span>{{ next.short }}</a>{% endif %}
+  </nav>
+  {% endif %}
+</article>
+
+{% set headings = [] %}
+{% for t in toc %}{% if t.level == 2 %}{% set _ = headings.append(t) %}{% endif %}{% endfor %}
+{% if headings | length > 2 %}
+<aside class="toc" aria-label="On this page">
+  <h2>On this page</h2>
+  <ol>
+    {% for t in headings %}<li><a href="#{{ t.id }}">{{ t.name | striptags | replace('&amp;', '&') }}</a></li>{% endfor %}
+  </ol>
+</aside>
+{% endif %}
+</div>
+{% endblock %}

@@ -605,7 +605,7 @@ def build(out: Path) -> dict:
 
     # ---- 404 + static assets + copied files -------------------------------
     (out / "404.html").write_text(env.get_template("404.html").render(
-        **common, root=CONFIG["site"].get("base_path", "/"), active=None, title="Page not found"), encoding="utf-8")
+        **common, root=os.environ.get("SITE_BASE_PATH") or CONFIG["site"].get("base_path", "/"), active=None, title="Page not found"), encoding="utf-8")
     shutil.copytree(HERE / "static", out / "static")
     for rel in sorted(resolver.copied):
         dst = out / "files" / Path(*LinkResolver.safe_parts(rel))

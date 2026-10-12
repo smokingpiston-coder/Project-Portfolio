@@ -5,9 +5,11 @@
 [site]
 title = "Ramkumar Huleppa Munavalli – Mobility Engineering Portfolio"
 description = "Vehicle dynamics, steering, electrification and simulation projects from an M.Sc. in Mobility Engineering at Chalmers."
-# Path the site is served from on GitHub Pages (https://<user>.github.io/<repo>/)
-base_path = "/Project-Portfolio/"
-url = "https://smokingpiston-coder.github.io/Project-Portfolio/"
+# Path the site is served from. "/" for Netlify or Cloudflare Pages;
+# "/Project-Portfolio/" if you ever switch to GitHub Pages.
+base_path = "/"
+# Fill in once Netlify gives you the address, e.g. "https://ramkumar-portfolio.netlify.app/"
+url = ""
 
 [person]
 name = "Ramkumar Huleppa Munavalli"
